@@ -1,3 +1,6 @@
 logging:
   level:
     com.dcai.passwordService: DEBUG
+    
+file:
+  password: src/test/resources/testPasswd.txt
