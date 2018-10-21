@@ -27,6 +27,8 @@
 		<jacoco.version>0.8.2</jacoco.version>
 		<spring-security-oauth2-autoconfigure.version>2.0.0.RELEASE</spring-security-oauth2-autoconfigure.version>
 		<powermock.version>1.7.4</powermock.version>
+		<maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
+		<puppycrawl.checkstyle.version>8.12</puppycrawl.checkstyle.version>
 	</properties>
 
 	<dependencies>
@@ -140,6 +142,30 @@
 								</rule>
 							</rules>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven.checkstyle.plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${puppycrawl.checkstyle.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>checkstyle-validation</id>
+						<phase>validate</phase>
+						<configuration>
+							<configLocation>src/checkstyle/google_checks.xml</configLocation>
+						</configuration>
+						<goals>
+							<goal>check</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
