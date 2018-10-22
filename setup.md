@@ -4,11 +4,11 @@ Please run the following steps to setup for execution:
 
 * Build jar file:
 
-			mvn clean install
+			./mvnw clean install
 
 * Run test coverage:
 
-			mvn clean verify
+			./mvnw clean verify
 
 * Start RESTful Web service:
 
@@ -17,6 +17,8 @@ Please run the following steps to setup for execution:
 * Request from Browser(Chrome, Firefox, Safari). Please be sure to use `https`. The very first time will take you to OAuth page with Facebook:
 
 			https://localhost:8100/users
+			https://localhost:8100/users/query?uid=1001
+			
 	
 * Request from CURL or [Postman](https://www.getpostman.com/ "Postman")
   1. Get OAuth token from OAuth Provider

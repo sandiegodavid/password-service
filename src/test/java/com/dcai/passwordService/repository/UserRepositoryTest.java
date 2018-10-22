@@ -3,7 +3,9 @@ package com.dcai.passwordService.repository;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.csv.CSVFormat;
@@ -55,7 +57,7 @@ public class UserRepositoryTest {
 	public void getAllUsersShouldSucceed() {
 		ReflectionTestUtils.setField(userRepository, "passwdFile", TEST_PASSWORD_FILE);
 		List<User> users = userRepository.getAllUsers();
-		assertEquals("failed to get all users.", 5, users.size());
+		assertEquals("failed to get all users.", 6, users.size());
 	}
 
 	@Test
@@ -64,6 +66,49 @@ public class UserRepositoryTest {
 
 		thrown.expect(FileError.class);
 		userRepository.getAllUsers();
+	}
+
+	@Test
+	public void findUsersShouldSucceed() {
+		ReflectionTestUtils.setField(userRepository, "passwdFile", TEST_PASSWORD_FILE);
+		Map<String, String> query = new HashMap<>();
+		query.put("name", "dwoodlins");
+		query.put("uid", "1001");
+		List<User> users = userRepository.findUsers(query);
+		assertEquals("failed to findUsers.", 1, users.size());
+	}
+
+	@Test
+	public void selectUserShouldMatchEmptyQuery() {
+		Map<String, String> query = new HashMap<>();
+		User user = new User();
+		assertTrue("failed to select user", UserRepository.selectUser(user, query));
+	}
+	
+	@Test
+	public void selectUserShouldMatchNullQuery() {
+		Map<String, String> query = new HashMap<>();
+		query.put("name", null);
+		User user = new User();
+		assertTrue("failed to select user", UserRepository.selectUser(user, query));
+	}
+
+	@Test
+	public void selectUserShouldExcludeNullField() {
+		Map<String, String> query = new HashMap<>();
+		query.put("name", "name");
+		User user = new User();
+		user.putAttribute(PasswdField.UserName, null);
+		assertFalse("failed to exlude user", UserRepository.selectUser(user, query));
+	}
+
+	@Test
+	public void selectUserShouldExcludeMismatch() {
+		Map<String, String> query = new HashMap<>();
+		query.put("name", "name");
+		User user = new User();
+		user.putAttribute(PasswdField.UserName, "name diff");
+		assertFalse("failed to exlude user", UserRepository.selectUser(user, query));
 	}
 
 }

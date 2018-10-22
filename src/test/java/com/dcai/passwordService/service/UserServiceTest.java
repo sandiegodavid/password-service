@@ -2,6 +2,8 @@ package com.dcai.passwordService.service;
 
 import static org.mockito.Mockito.verify;
 
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +13,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.dcai.passwordService.repository.UserRepository;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -30,6 +34,13 @@ public class UserServiceTest {
 	public void getAllUsersShouldCallRepository() {
 		userService.getAllUsers();
 		verify(userRepository).getAllUsers();
+	}
+
+	@Test
+	public void getUsersShouldCallRepository() {
+		Map<String, String> query = Collections.emptyMap();
+		userService.getUsers(query);
+		verify(userRepository).findUsers(query);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -48,6 +49,10 @@ public class UserRepository {
 	}
 
 	public List<User> getAllUsers() {
+		return findUsers(null);
+	}
+
+	public List<User> findUsers(Map<String, String> query) {
 		List<User> users = new ArrayList<>();
 		try (Reader reader = new BufferedReader(new FileReader(passwdFile))) {
 			CSVParser parser = csvFormat.parse(reader);
@@ -60,7 +65,9 @@ public class UserRepository {
 					}
 					user.putAttribute(field, record.get(field));
 				}
-				users.add(user);
+				if (selectUser(user, query)) {
+					users.add(user);
+				}
 			}
 		} catch (IOException e) {
 			log.error("Passwd file:({}) not found or can't be parsed.", passwdFile, e);
@@ -68,6 +75,28 @@ public class UserRepository {
 		}
 		log.debug("returning {} users.", users.size());
 		return users;
+	}
+
+	static boolean selectUser(User user, Map<String, String> query) {
+		if (query == null || query.isEmpty()) {
+			return true;
+		}
+		for (PasswdField f : PasswdField.values()) {
+			for (Map.Entry<String, String> e : query.entrySet()) {
+				if (e.getKey().contentEquals(f.getField())) {
+					String queryValue = e.getValue();
+					if (queryValue == null) {
+						break;
+					}
+					Object attr = user.getAttribute(f);
+					if ((attr == null) || !queryValue.contentEquals(attr.toString())) {
+						return false;
+					}
+					break;
+				}
+			}
+		}
+		return true;
 	}
 
 }

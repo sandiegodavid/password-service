@@ -1,6 +1,7 @@
 package com.dcai.passwordService.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class UserService {
 
 	public List<User> getAllUsers() {
 		return userRepository.getAllUsers();
+	}
+
+	public List<User> getUsers(Map<String, String> query) {
+		return userRepository.findUsers(query);
 	}
 
 }
