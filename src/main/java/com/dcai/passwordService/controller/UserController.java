@@ -5,10 +5,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dcai.passwordService.exception.RecordMissingError;
 import com.dcai.passwordService.model.User;
 import com.dcai.passwordService.service.UserService;
 
@@ -32,6 +34,12 @@ public class UserController {
 	public List<User> getUsers(@RequestParam Map<String, String> query) {
 		log.debug("query is called. RequestParam:{}", query);
 		return userService.getUsers(query);
+	}
+
+	@GetMapping("/{uid}")
+	public User getUser(@PathVariable Integer uid) {
+		log.debug("getUser is called. uid:{}", uid);
+		return userService.getUser(uid).orElseThrow(RecordMissingError::new);
 	}
 
 }

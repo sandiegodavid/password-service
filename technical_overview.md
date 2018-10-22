@@ -1,0 +1,5 @@
+- Test coverage: 97% line, 100% branch
+- HTTPS
+- OAuth2
+- Configurable input(`src/main/resources/application.yml`, `application-local.yml`) with sensable defaults
+- Easy maintenance and extensibility when fields change (single source of truth maintained in `enum`)

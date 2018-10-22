@@ -10,6 +10,7 @@ server:
     key-password: password
     key-store:  classpath:selfsigned.jks
     key-store-type: JKS
+  error.whitelabel.enabled: true
     
 security:
   basic:

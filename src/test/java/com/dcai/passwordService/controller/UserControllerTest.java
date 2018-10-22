@@ -3,15 +3,20 @@ package com.dcai.passwordService.controller;
 import static org.mockito.Mockito.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.dcai.passwordService.exception.RecordMissingError;
+import com.dcai.passwordService.model.User;
 import com.dcai.passwordService.service.UserService;
 
 import edu.emory.mathcs.backport.java.util.Collections;
@@ -24,6 +29,9 @@ public class UserControllerTest {
 
 	@Mock
 	private UserService userService;
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Before
 	public void setUp() throws Exception {
@@ -41,6 +49,20 @@ public class UserControllerTest {
 		Map<String, String> query = Collections.emptyMap();
 		userController.getUsers(query);
 		verify(userService).getUsers(query);
+	}
+
+	@Test
+	public void getUserShouldCallUserService() {
+		when(userService.getUser(5)).thenReturn(Optional.of(new User()));
+		userController.getUser(5);
+		verify(userService).getUser(5);
+	}
+
+	@Test
+	public void getUserShouldThrow() {
+		thrown.expect(RecordMissingError.class);
+		userController.getUser(5);
+		verify(userService).getUser(5);
 	}
 
 }
