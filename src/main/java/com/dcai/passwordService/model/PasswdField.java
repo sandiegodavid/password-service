@@ -2,19 +2,23 @@ package com.dcai.passwordService.model;
 
 import lombok.Getter;
 
+@Getter
 public enum PasswdField {
-	UserName("name"),
-	Password("password"),
-	UserID("uid"),
-	GroupID("gid"),
-	UserInfo("comment"),
-	HomeDirectory("home"),
-	CommandShell("shell");
+	UserName("name", AttributeType.String),
+	Password("password", AttributeType.String),
+	UserID("uid", AttributeType.Integer),
+	GroupID("gid", AttributeType.Integer),
+	UserInfo("comment", AttributeType.String),
+	HomeDirectory("home", AttributeType.String),
+	CommandShell("shell", AttributeType.String);
 
-	@Getter
 	private String field;
 
-	PasswdField(String field) {
+	// unfortunately enum can't be generic
+	private AttributeType attributeType;
+
+	PasswdField(String field, AttributeType attributeType) {
 		this.field = field;
+		this.attributeType = attributeType;
 	}
 }

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -54,13 +53,12 @@ public class UserRepository {
 			CSVParser parser = csvFormat.parse(reader);
 			for (CSVRecord record : parser) {
 				User user = new User();
-				Map<PasswdField, String> fields = user.getFields();
 				for (PasswdField field : PasswdField.values()) {
 					if (PasswdField.Password == field) {
 						// don't read password
 						continue;
 					}
-					fields.put(field, record.get(field));
+					user.putAttribute(field, record.get(field));
 				}
 				users.add(user);
 			}

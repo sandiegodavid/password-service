@@ -1,3 +1,9 @@
+spring:
+  application.name: passwordService
+#  jackson.mapper:
+#    com.dcai.passwordService.model.User: userMapper
+  jackson.serialization.indent_output: true
+    
 server:
   port: 8100
   ssl:
