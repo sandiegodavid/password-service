@@ -14,15 +14,15 @@ Please run the following steps to setup for execution:
 
 			java  -Dspring.profiles.active=local -jar target/passwordService-0.0.1-SNAPSHOT.jar
 	
-* Request from Browser(Chrome, Firefox, Safari). Please be sure to use `https`:
+* Request from Browser(Chrome, Firefox, Safari):
 
-			https://localhost:8100/users
-			https://localhost:8100/users/query?uid=1001
-			https://localhost:8100/users/1001
-			https://localhost:8100/users/1001/groups
-			https://localhost:8100/groups
-			https://localhost:8100/groups/query?gid=502&member=shelley&members=juan
-			https://localhost:8100/groups/250						
+			http://localhost:8100/users
+			http://localhost:8100/users/query?uid=1001
+			http://localhost:8100/users/1001
+			http://localhost:8100/users/1001/groups
+			http://localhost:8100/groups
+			http://localhost:8100/groups/query?gid=502&member=shelley&members=juan
+			http://localhost:8100/groups/250						
 
 Notes:
 
