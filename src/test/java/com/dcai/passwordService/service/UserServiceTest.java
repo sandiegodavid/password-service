@@ -9,13 +9,16 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.dcai.passwordService.exception.RecordMissingError;
 import com.dcai.passwordService.model.User;
 import com.dcai.passwordService.repository.UserRepository;
 
@@ -29,6 +32,9 @@ public class UserServiceTest {
 
 	@Mock
 	private UserRepository userRepository;
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Before
 	public void setUp() throws Exception {
@@ -61,6 +67,19 @@ public class UserServiceTest {
 		when(userRepository.findUsers(any(Map.class))).thenReturn(Arrays.asList(new User()));
 		Optional<User> result = userService.getUser(5);
 		assertTrue("failed to get user", result.isPresent());
+	}
+
+	@Test
+	public void getUserGroupsShouldCallRepository() {
+		when(userRepository.findUsers(any(Map.class))).thenReturn(Arrays.asList(new User()));
+		userService.getUserGroups(5);
+		verify(userRepository).findUserGroups(any(User.class));
+	}
+
+	@Test
+	public void getUserGroupsShouldThrow() {
+		thrown.expect(RecordMissingError.class);
+		userService.getUserGroups(5);
 	}
 
 }

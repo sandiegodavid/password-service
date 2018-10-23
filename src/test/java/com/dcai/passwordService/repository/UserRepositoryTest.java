@@ -19,17 +19,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.dcai.passwordService.exception.FileError;
+import com.dcai.passwordService.model.Group;
 import com.dcai.passwordService.model.PasswdField;
 import com.dcai.passwordService.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { UserRepository.class })
+@ContextConfiguration(classes = { UserRepository.class, GroupRepository.class })
 public class UserRepositoryTest {
 
 	@Autowired
 	private UserRepository userRepository;
 
-	private static final String TEST_PASSWORD_FILE = "src/test/resources/testPasswd.txt";
+	@Autowired
+	private GroupRepository groupRepository;
+
+	static final String TEST_PASSWORD_FILE = "src/test/resources/testPasswd.txt";
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -84,7 +88,7 @@ public class UserRepositoryTest {
 		User user = new User();
 		assertTrue("failed to select user", UserRepository.selectUser(user, query));
 	}
-	
+
 	@Test
 	public void selectUserShouldMatchNullQuery() {
 		Map<String, String> query = new HashMap<>();
@@ -111,4 +115,12 @@ public class UserRepositoryTest {
 		assertFalse("failed to exlude user", UserRepository.selectUser(user, query));
 	}
 
+	@Test
+	public void findUserGroupsShouldSucceed() {
+		ReflectionTestUtils.setField(groupRepository, "groupsFile", GroupRepositoryTest.TEST_GROUP_FILE);
+		User user = new User();
+		user.putAttribute(PasswdField.UserName, "dcai");
+		List<Group> users = userRepository.findUserGroups(user);
+		assertEquals("failed to get user groups.", 2, users.size());
+	}
 }

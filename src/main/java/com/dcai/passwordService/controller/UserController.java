@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dcai.passwordService.exception.RecordMissingError;
+import com.dcai.passwordService.model.Group;
 import com.dcai.passwordService.model.User;
 import com.dcai.passwordService.service.UserService;
 
@@ -40,6 +41,12 @@ public class UserController {
 	public User getUser(@PathVariable Integer uid) {
 		log.debug("getUser is called. uid:{}", uid);
 		return userService.getUser(uid).orElseThrow(RecordMissingError::new);
+	}
+
+	@GetMapping("/{uid}/groups")
+	public List<Group> getUserGroups(@PathVariable Integer uid) {
+		log.debug("getUserGroups is called. uid:{}", uid);
+		return userService.getUserGroups(uid);
 	}
 
 }

@@ -65,4 +65,11 @@ public class UserControllerTest {
 		verify(userService).getUser(5);
 	}
 
+	@Test
+	public void getUserGroupsShouldCallUserService() {
+		when(userService.getUserGroups(5)).thenReturn(Collections.emptyList());
+		userController.getUserGroups(5);
+		verify(userService).getUserGroups(5);
+	}
+
 }

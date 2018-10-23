@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dcai.passwordService.exception.RecordMissingError;
+import com.dcai.passwordService.model.Group;
 import com.dcai.passwordService.model.User;
 import com.dcai.passwordService.repository.UserRepository;
 
@@ -30,6 +32,11 @@ public class UserService {
 		query.put("uid", String.valueOf(uid));
 		List<User> users = userRepository.findUsers(query);
 		return users.isEmpty() ? Optional.empty() : Optional.of(users.get(0));
+	}
+
+	public List<Group> getUserGroups(Integer uid) {
+		User user = getUser(uid).orElseThrow(RecordMissingError::new);
+		return userRepository.findUserGroups(user);
 	}
 
 }

@@ -13,10 +13,15 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import com.dcai.passwordService.exception.FileError;
+import com.dcai.passwordService.model.Group;
+import com.dcai.passwordService.model.GroupField;
 import com.dcai.passwordService.model.PasswdField;
 import com.dcai.passwordService.model.User;
 
@@ -38,6 +43,9 @@ public class UserRepository {
 
 	@Value("${file.passwd.commentMarker:" + DEFAULT_COMMENT_MARKER + "}")
 	private char commentMarker;
+
+	@Autowired
+	private GroupRepository groupRepository;
 
 	private CSVFormat csvFormat;
 
@@ -97,6 +105,13 @@ public class UserRepository {
 			}
 		}
 		return true;
+	}
+
+	public List<Group> findUserGroups(User user) {
+		String userName = (String) user.getAttribute(PasswdField.UserName);
+		MultiValueMap<String, String> query = new LinkedMultiValueMap<>();
+		query.add(GroupField.GroupList.getField(), userName);
+		return groupRepository.findGroups(query);
 	}
 
 }

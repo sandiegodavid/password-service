@@ -31,7 +31,7 @@ public class GroupRepositoryTest {
 	@Autowired
 	private GroupRepository groupRepository;
 
-	private static final String TEST_GROUP_FILE = "src/test/resources/testGroup.txt";
+	static final String TEST_GROUP_FILE = "src/test/resources/testGroup.txt";
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
