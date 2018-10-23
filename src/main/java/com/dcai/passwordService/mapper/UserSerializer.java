@@ -23,7 +23,8 @@ public class UserSerializer extends StdSerializer<User> {
 	public void serialize(User user, JsonGenerator generator, SerializerProvider provider) throws IOException {
 		generator.writeStartObject();
 		for (PasswdField field : PasswdField.values()) {
-			SerializerHelper.serialField(generator, field.getField(), user.getAttribute(field));
+			SerializerHelper.serialField(generator,
+			        field.getField(), field.getAttributeType(), user.getAttribute(field));
 		}
 		generator.writeEndObject();
 	}

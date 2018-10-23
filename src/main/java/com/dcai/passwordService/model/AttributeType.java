@@ -6,5 +6,7 @@ public enum AttributeType {
 	Float,
 	Integer,
 	Long,
-	String
+	String,
+	StringList,
+	Undefined
 }

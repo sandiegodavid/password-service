@@ -4,4 +4,4 @@ logging:
     
 file:
   password: src/test/resources/testPasswd.txt
-  group: src/test/resources/testGroup.txt
+  groups: src/test/resources/testGroup.txt
