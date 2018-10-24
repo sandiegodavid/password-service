@@ -1,7 +1,7 @@
 spring:
   application.name: passwordService
 #  jackson.mapper:
-#    com.dcai.passwordService.model.User: userMapper
+#    com.dcai.password.service.model.User: userMapper
   jackson.serialization.indent_output: true
     
 server:
