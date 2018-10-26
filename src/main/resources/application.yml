@@ -1,9 +1,16 @@
+spring:
+  application.name: passwordService
+#  jackson.mapper:
+#    com.dcai.password.service.model.User: userMapper
+  jackson.serialization.indent_output: true
+    
 server:
   port: 8100
-  ssl:
-    key-password: password
-    key-store:  classpath:selfsigned.jks
-    key-store-type: JKS
+#  ssl:
+#    key-password: password
+#    key-store:  classpath:selfsigned.jks
+#    key-store-type: JKS
+  error.whitelabel.enabled: true
     
 security:
   basic:
@@ -24,6 +31,10 @@ security:
 
 # file:
 #  password: <path to your passwd file, default to /etc/passwd>
+#    field:
+#      delimiter: <default to ':'>
+#    commentMarker: <default to hash sign>
+#  groups: <path to your groups file, default to /etc/groups>
 #    field:
 #      delimiter: <default to ':'>
 #    commentMarker: <default to hash sign>

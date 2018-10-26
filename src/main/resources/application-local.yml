@@ -1,3 +1,7 @@
 logging:
   level:
-    com.dcai.passwordService: DEBUG
+    com.dcai.password.service: DEBUG
+    
+file:
+  password: src/test/resources/testPasswd.txt
+  groups: src/test/resources/testGroup.txt
