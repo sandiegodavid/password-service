@@ -1,0 +1,8 @@
+general:x:502:juan,dwoodlins,shelley,bob 
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:dcai,dwoodlins
+_analyticsusers:x:250:_analyticsd,_networkd,_timed
+docker:x:1001:dwoodlins,dcai,bob

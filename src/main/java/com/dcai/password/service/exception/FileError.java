@@ -1,4 +1,4 @@
-package com.dcai.passwordService.exception;
+package com.dcai.password.service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
